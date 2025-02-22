@@ -19,12 +19,12 @@ public class VADWrapper {
         vadInstance = createVADInstance();
     }
 
-    public native long createVADInstance();
-    public native void destroyVADInstance(long instance);
-    public native void processAudio(long instance, float[] audioData);
-    public native void setVADSampleRate(long instance, int sampleRate);
-    public native void setVADModel(long instance, int modelVersion, String modelPath);
-    public native void setVADThreshold(long instance, float vadStartProb, float vadEndProb,
+    private native long createVADInstance();
+    private native void destroyVADInstance(long instance);
+    private native void processAudio(long instance, float[] audioData);
+    private native void setVADSampleRate(long instance, int sampleRate);
+    private native void setVADModel(long instance, int modelVersion, String modelPath);
+    private native void setVADThreshold(long instance, float vadStartProb, float vadEndProb,
                                        float startTrueRatio, float endFalseRatio,
                                        int startFrameCount, int endFrameCount);
 

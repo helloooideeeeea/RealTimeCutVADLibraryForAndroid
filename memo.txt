@@ -2,4 +2,6 @@
 
 ./gradlew :realtimecutvadlibrary:assembleDebug
 
+#./gradlew :realtimecutvadlibrary:assembleRelease
+
 ./gradlew :realtimecutvadlibrary:connectedAndroidTest
