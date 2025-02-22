@@ -124,11 +124,11 @@ fun MicRecordingScreen() {
                             recordingStatusFlow.value = RecordingStatus.RUNNING
                         }
                     }) {
-                        Text("▶ 再生")
+                        Text("▶ Play")
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Button(onClick = { shareAudio(context, waveAudioData!!) }) {
-                        Text("📤 シェア")
+                        Text("📤 Share")
                     }
                 }
             }
