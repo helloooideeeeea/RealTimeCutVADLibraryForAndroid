@@ -19,7 +19,8 @@ A real-time **Voice Activity Detection (VAD)** library for **Android** using **S
 
 Check out the sample Android app demonstrating real-time VAD:
 
-[Sample Android App Demo]()
+
+[Sample Android App Demo](https://github.com/user-attachments/assets/bb66e388-b0b9-4294-8e59-322b9f65ec4a)
 
 ---
 
