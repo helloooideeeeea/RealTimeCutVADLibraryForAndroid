@@ -1,5 +1,8 @@
+import java.net.URI
+
 plugins {
     alias(libs.plugins.android.library)
+    id("maven-publish")
 }
 
 android {
@@ -21,6 +24,13 @@ android {
                 arguments += "-DANDROID_STL=c++_shared"
                 cppFlags += listOf("-std=c++17", "-fexceptions", "-frtti")
             }
+        }
+    }
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
         }
     }
 
@@ -54,10 +64,85 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+
+// -----------------------------
+// jniLibs のダウンロードタスク
+// -----------------------------
+val mainDir = file("${projectDir}/src/main/")
+val jniLibsZip = file("${projectDir}/jniLibs.zip")
+
+tasks.register("downloadJniLibs") {
+    doLast {
+        if (!jniLibsZip.exists()) {
+            val url = URI("https://github.com/helloooideeeeea/RealTimeCutVADLibraryForXCFramework/releases/download/v1.0.1/jniLibs.zip").toURL()
+            println("Downloading jniLibs from $url")
+
+            url.openStream().use { input ->
+                jniLibsZip.outputStream().use { output ->
+                    input.copyTo(output)
+                }
+            }
+        }
+
+        println("Extracting jniLibs...")
+        copy {
+            from(zipTree(jniLibsZip))
+            into(mainDir)
+        }
+    }
+}
+
+tasks.named("preBuild").configure {
+    dependsOn("downloadJniLibs")
+}
+
+
+// -----------------------------
+// publishing
+// -----------------------------
+afterEvaluate {
+    publishing {
+        publications {
+            create<MavenPublication>("release") {
+                from(components.findByName("release") ?: error("Component 'release' not found."))
+
+                groupId = "com.github.helloooideeeeea"
+                artifactId = "realtimecutvadlibrary"
+                version = "1.0.0"
+
+                pom {
+                    name.set("RealTimeCutVADLibrary")
+                    description.set("A real-time voice activity detection library")
+                    url.set("https://github.com/helloooideeeeea/RealTimeCutVADLibraryForAndroid")
+
+                    licenses {
+                        license {
+                            name.set("MIT License")
+                            url.set("https://opensource.org/licenses/MIT")
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id.set("helloooideeeeea")
+                            name.set("Yasushi Sakita")
+                            email.set("yasushi.sakita@gmail.com")
+                        }
+                    }
+
+                    scm {
+                        connection.set("scm:git:github.com/helloooideeeeea/RealTimeCutVADLibraryForAndroid.git")
+                        developerConnection.set("scm:git:ssh://github.com/helloooideeeeea/RealTimeCutVADLibraryForAndroid.git")
+                        url.set("https://github.com/helloooideeeeea/RealTimeCutVADLibraryForAndroid")
+                    }
+                }
+            }
+        }
+    }
 }
