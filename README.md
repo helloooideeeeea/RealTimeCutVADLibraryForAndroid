@@ -64,8 +64,8 @@ class MainActivity : AppCompatActivity() {
         
         // Initialize VAD Wrapper
         vadWrapper = VADWrapper(this)
-        vadWrapper?.setVADModel(VADWrapper.SileroModelVersion.V4)
-
+        vadWrapper?.setVADModel(VADWrapper.SileroModelVersion.V4) // Version v4 is recommended.
+        vadWrapper?.setVADThreshold(0.7F, 0.7F, 0.8F, 0.95F, 10, 57) // Calling setVADThreshold is optional. If not called, the recommended default values will be used.
         // Set VAD sample rate based on input sample rate
         when (sampleRate) {
             48000 -> vadWrapper?.setVADSampleRate(VADWrapper.SampleRate.SAMPLERATE_48)
@@ -82,12 +82,10 @@ class MainActivity : AppCompatActivity() {
         vadWrapper?.setVADCallback(object : VADCallback {
             override fun onVoiceStart() {
                 Log.d("VAD", "✅ onVoiceStart() called")
-                onStatusChange(RecordingStatus.TALKING, null)
             }
 
             override fun onVoiceEnd(wavData: ByteArray?) {
                 Log.d("VAD", "✅ onVoiceEnd() called. wavData length: ${wavData?.size ?: 0}")
-                onStatusChange(RecordingStatus.RUNNING, wavData) // 🔹 waveAudioData を渡す
             }
         })
     }
