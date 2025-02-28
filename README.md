@@ -42,7 +42,7 @@ dependencyResolutionManagement {
 2. **Add the dependency to `app/build.gradle.kts`**
 ```kotlin
 dependencies {
-    implementation("com.github.helloooideeeeea:RealTimeCutVADLibraryForAndroid:1.0.0@aar")
+    implementation("com.github.helloooideeeeea:RealTimeCutVADLibraryForAndroid:1.0.1@aar")
 }
 ```
 
