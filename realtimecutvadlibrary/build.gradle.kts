@@ -114,7 +114,7 @@ afterEvaluate {
 
                 groupId = "com.github.helloooideeeeea"
                 artifactId = "realtimecutvadlibrary"
-                version = "1.0.0"
+                version = "1.0.1"
 
                 pom {
                     name.set("RealTimeCutVADLibrary")
