@@ -65,8 +65,8 @@ class MainActivity : AppCompatActivity() {
         
         // Initialize VAD Wrapper
         vadWrapper = VADWrapper(this)
-        vadWrapper?.setVADModel(VADWrapper.SileroModelVersion.V4) // Version v4 is recommended.
-        // vadWrapper?.setVADThreshold(0.7F, 0.7F, 0.8F, 0.95F, 10, 57) // Calling setVADThreshold is optional. If not called, the recommended default values will be used.
+        vadWrapper?.setVADModel(VADWrapper.SileroModelVersion.V5)
+        // vadWrapper?.setVADThreshold(0.7F, 0.7F, 0.5F, 0.95F, 10, 57) // Calling setVADThreshold is optional. If not called, the recommended default values will be used.
         // Set VAD sample rate based on input sample rate
         when (sampleRate) {
             48000 -> vadWrapper?.setVADSampleRate(VADWrapper.SampleRate.SAMPLERATE_48)
@@ -129,12 +129,12 @@ Choose between Silero model versions:
 Customize VAD detection sensitivity using `setVADThresholdWithVadStartDetectionProbability()`:
 
 ```kotlin
-vadWrapper.setVADThreshold(0.7F, 0.7F, 0.8F, 0.95F, 10, 57)
+vadWrapper.setVADThreshold(0.7F, 0.7F, 0.5F, 0.95F, 10, 57)
 ↓
 
     0.7F,  // Start detection probability threshold
     0.7F,  // End detection probability threshold
-    0.8F,  // True positive ratio for voice start
+    0.5F,  // True positive ratio for voice start
     0.95F, // False positive ratio for voice end
     10,    // Frames to confirm voice start (0.32s)
     57     // Frames to confirm voice end (1.792s)
@@ -144,15 +144,33 @@ vadWrapper.setVADThreshold(0.7F, 0.7F, 0.8F, 0.95F, 10, 57)
 ### **Threshold Explanation**
 - **Start detection probability threshold (0.7)**: The VAD model must predict speech probability above this threshold to trigger voice start.
 - **End detection probability threshold (0.7)**: The VAD model must predict speech probability below this threshold to trigger voice end.
-- **True positive ratio for voice start (0.8)**: 80% of frames in a given window must be speech for voice activity to begin.
+- **True positive ratio for voice start (0.5)**: 50% of frames in a given window must be speech for voice activity to begin.
 - **False positive ratio for voice end (0.95)**: 95% of frames in a given window must be silence for voice activity to end.
 - **Start frame count (10 frames ≈ 0.32s)**: Number of frames required to confirm voice activity.
-- **End frame count (57 frames ≈ 1.792s)**: Number of frames required to confirm silence before stopping voice detection.
+- **End frame count (57 frames ≈ 1.824s)**: Number of frames required to confirm silence before stopping voice detection.
 
 
 #### **Important Notes:**
-- **Default Thresholds for Silero v4**: If you do not configure the VAD thresholds manually, the library will use default thresholds optimized for Silero model **v4**.
-- **Silero v5 Performance**: The performance of Silero model **v5** may vary, and it is recommended to experiment with different thresholds to achieve optimal results. For more information, refer to the [related discussion](https://github.com/SYSTRAN/faster-whisper/issues/934#issuecomment-2439340290).
+- **Stricter VAD Detection in Silero v5**:
+Based on observations, Silero v5 appears to apply a stricter VAD detection mechanism compared to v4. 
+
+- **Differences in Speech Start Detection**:
+In Silero v4, speech is considered to have started if, within 10 frames (0.32s), **80%** of the frames exceed a VAD probability of 70%.
+In Silero v5, this condition is relaxed, and speech is considered started if **50%** of the frames within 10 frames (0.32s) exceed a VAD probability of 70%.
+Adjusting Sensitivity for Voice Activity Detection
+If you need to fine-tune the sensitivity of voice segmentation, use the following function to customize the thresholds:
+
+```swift
+vadManager?.setThresholdWithVadStartDetectionProbability(<#T##Float#>, 
+    vadEndDetectionProbability: <#T##Float#>, 
+    voiceStartVadTrueRatio: <#T##Float#>, 
+    voiceEndVadFalseRatio: <#T##Float#>, 
+    voiceStartFrameCount: <#T##Int32#>, 
+    voiceEndFrameCount: <#T##Int32#>)
+```
+By adjusting these parameters, you can fine-tune the strictness of voice segmentation to better suit your application needs.
+- **Silero v5 Performance**:
+The performance of Silero model v5 may vary, and adjusting the thresholds might be necessary to achieve optimal results. There are also discussions on this topic, such as [this one](https://github.com/SYSTRAN/faster-whisper/issues/934#issuecomment-2439340290).
 
 ---
 
