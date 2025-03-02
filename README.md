@@ -160,13 +160,8 @@ In Silero v5, this condition is relaxed, and speech is considered started if **5
 Adjusting Sensitivity for Voice Activity Detection
 If you need to fine-tune the sensitivity of voice segmentation, use the following function to customize the thresholds:
 
-```swift
-vadManager?.setThresholdWithVadStartDetectionProbability(<#T##Float#>, 
-    vadEndDetectionProbability: <#T##Float#>, 
-    voiceStartVadTrueRatio: <#T##Float#>, 
-    voiceEndVadFalseRatio: <#T##Float#>, 
-    voiceStartFrameCount: <#T##Int32#>, 
-    voiceEndFrameCount: <#T##Int32#>)
+```java
+vadWrapper?.setVADThreshold(0.7F, 0.7F, 0.5F, 0.95F, 10, 57)
 ```
 By adjusting these parameters, you can fine-tune the strictness of voice segmentation to better suit your application needs.
 - **Silero v5 Performance**:
