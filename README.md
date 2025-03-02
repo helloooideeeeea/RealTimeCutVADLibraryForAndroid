@@ -137,7 +137,7 @@ vadWrapper.setVADThreshold(0.7F, 0.7F, 0.5F, 0.95F, 10, 57)
     0.5F,  // True positive ratio for voice start
     0.95F, // False positive ratio for voice end
     10,    // Frames to confirm voice start (0.32s)
-    57     // Frames to confirm voice end (1.792s)
+    57     // Frames to confirm voice end (1.824s)
 
 ```
 
