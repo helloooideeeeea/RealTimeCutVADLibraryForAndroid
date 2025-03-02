@@ -75,12 +75,12 @@ dependencies {
 // jniLibs のダウンロードタスク
 // -----------------------------
 val mainDir = file("${projectDir}/src/main/")
-val jniLibsZip = file("${projectDir}/jniLibs.zip")
+val jniLibsZip = file("${projectDir}/RealTimeCutVADCXXLibrary.jniLibs.zip")
 
 tasks.register("downloadJniLibs") {
     doLast {
         if (!jniLibsZip.exists()) {
-            val url = URI("https://github.com/helloooideeeeea/RealTimeCutVADLibraryForXCFramework/releases/download/v1.0.1/jniLibs.zip").toURL()
+            val url = URI("https://github.com/helloooideeeeea/RealTimeCutVADCXXLibrary/releases/download/v1.0.2/RealTimeCutVADCXXLibrary.jniLibs.zip").toURL()
             println("Downloading jniLibs from $url")
 
             url.openStream().use { input ->
@@ -114,7 +114,7 @@ afterEvaluate {
 
                 groupId = "com.github.helloooideeeeea"
                 artifactId = "realtimecutvadlibrary"
-                version = "1.0.1"
+                version = "1.0.2"
 
                 pom {
                     name.set("RealTimeCutVADLibrary")
