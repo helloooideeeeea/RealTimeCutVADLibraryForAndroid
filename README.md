@@ -122,7 +122,7 @@ You can set the audio sample rate using `setSamplerate`:
 Choose between Silero model versions:
 
 - `.v4` - Silero Model Version 4
-- `.v5` - Silero Model Version 5
+- `.v5` - Silero Model Version 5 (recommend)
 
 ### **VAD Threshold Configuration**
 
