@@ -157,7 +157,7 @@ fun startVADProcessing(
     }
 
     val vadWrapper = VADWrapper(context)
-    vadWrapper.setVADModel(VADWrapper.SileroModelVersion.V4)
+    vadWrapper.setVADModel(VADWrapper.SileroModelVersion.V5)
 
     // 🔹 VAD に適したサンプルレートを設定
     when (sampleRate) {
