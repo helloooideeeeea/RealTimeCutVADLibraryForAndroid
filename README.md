@@ -43,7 +43,7 @@ dependencyResolutionManagement {
 
 ```kotlin
 dependencies {
-    implementation("com.github.helloooideeeeea:RealTimeCutVADLibraryForAndroid:1.0.4@aar")
+    implementation("com.github.helloooideeeeea:RealTimeCutVADLibraryForAndroid:1.0.5@aar")
 }
 ```
 
