@@ -80,7 +80,7 @@ val jniLibsZip = file("${projectDir}/RealTimeCutVADCXXLibrary.jniLibs.zip")
 tasks.register("downloadJniLibs") {
     doLast {
         if (!jniLibsZip.exists()) {
-            val url = URI("https://github.com/helloooideeeeea/RealTimeCutVADLibraryForXCFramework/releases/download/v1.0.7/jniLibs.zip").toURL()
+            val url = URI("https://github.com/helloooideeeeea/RealTimeCutVADLibraryForXCFramework/releases/download/v1.0.8/jniLibs.zip").toURL()
             println("Downloading jniLibs from $url")
 
             url.openStream().use { input ->
