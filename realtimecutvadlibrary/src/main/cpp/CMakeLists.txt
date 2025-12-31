@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(realtime_cut_vad_library_for_android)
 
-set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-undefined")
+set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--no-undefined -Wl,-z,max-page-size=16384 -Wl,-z,common-page-size=16384")
 
 add_library(RealtimeCutVadLibraryForAndroid SHARED vad-wrapper.cpp)
 include_directories(
