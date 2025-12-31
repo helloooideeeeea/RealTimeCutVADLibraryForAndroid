@@ -181,6 +181,10 @@ fun startVADProcessing(
             Log.d("VAD", "✅ onVoiceEnd() called. wavData length: ${wavData?.size ?: 0}")
             onStatusChange(RecordingStatus.RUNNING, wavData) // 🔹 waveAudioData を渡す
         }
+
+        override fun onVoiceDidContinue(pcmFloatData: ByteArray?) {
+            // Use this only if you need real-time VAD-detected PCM float frames.
+        }
     })
 
     val audioRecord = AudioRecord(

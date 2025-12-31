@@ -121,4 +121,10 @@ public class VADWrapper {
             callback.onVoiceEnd(wavData);
         }
     }
+
+    private void onVoiceDidContinue(byte[] pcmFloatData) {
+        if (callback != null) {
+            callback.onVoiceDidContinue(pcmFloatData);
+        }
+    }
 }
